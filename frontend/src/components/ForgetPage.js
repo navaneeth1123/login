@@ -13,6 +13,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from "@mui/material/IconButton";
 import CardHeader from "@mui/material/CardHeader";
 import { useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function HomePage() {
     const [name, setName] = useState(""); 
@@ -20,6 +22,15 @@ export default function HomePage() {
     const [repass, setRepass] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [showpass,setShowpass]=useState(true)
+    const [showrepass,setShowrepass]=useState(true)
+
+    const handleTogglePasswordVisibility = () => {
+        setShowpass((prevShowpass) => !prevShowpass);
+    };
+    const handleTogglerePasswordVisibility = () => {
+        setShowrepass((prevShowpass) => !prevShowpass);
+    };
 
     const handleBack = () => {
         navigate('/');
@@ -96,10 +107,17 @@ export default function HomePage() {
                                         placeholder='Enter New Password'
                                         variant="filled"
                                         name="password"
-                                        type='password'
+                                        type={showpass?"password":"text"}
                                         value={pass}
                                         onChange={(e) => setPass(e.target.value)}
                                         required
+                                        InputProps={{
+                                            endAdornment: (
+                                                <IconButton onClick={handleTogglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                                    {showpass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                </IconButton>
+                                            ),
+                                        }}
                                     />
                                 </Typography>
                                 <Typography>
@@ -108,10 +126,17 @@ export default function HomePage() {
                                         label="Re-enter Password"
                                         variant="filled"
                                         name="repassword"
-                                        type='password'
+                                        type={showrepass?"password":"text"}
                                         value={repass}
                                         onChange={(e) => setRepass(e.target.value)}
                                         required
+                                        InputProps={{
+                                            endAdornment: (
+                                                <IconButton onClick={handleTogglerePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                                    {showrepass ? <VisibilityOffIcon /> : < VisibilityIcon/>}
+                                                </IconButton>
+                                            ),
+                                        }}
                                     />
                                 </Typography>
                             </CardContent>

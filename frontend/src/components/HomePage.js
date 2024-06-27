@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { CardHeader, IconButton } from "@mui/material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 
 export default function HomePage() {
     const [name, setName] = useState(""); 
@@ -18,6 +21,8 @@ export default function HomePage() {
     const [repass, setRepass] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showpass,setShowpass]=useState(true)
+    const [showrepass,setShowrepass]=useState(true)
     const [tferror,setTferror]= useState(
         {
             nameerr:"",
@@ -27,6 +32,13 @@ export default function HomePage() {
     )
 
     const navigate = useNavigate();
+
+    const handleTogglePasswordVisibility = () => {
+        setShowpass((prevShowpass) => !prevShowpass);
+    };
+    const handleTogglerePasswordVisibility = () => {
+        setShowrepass((prevShowpass) => !prevShowpass);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -61,6 +73,14 @@ export default function HomePage() {
           }));
           valid = false;
         }
+        if (pass.length <=10)
+            {
+                setTferror((prevState) => ({
+                    ...prevState,
+                    passerr: "Password must be more than 10 characters",
+                  }));
+                  valid = false;  
+            }
     
         // If all fields are valid, proceed with submission
         if (valid) {
@@ -137,7 +157,7 @@ export default function HomePage() {
                                         label="Password"
                                         variant="filled"
                                         name="password"
-                                        type='password'
+                                        type={showpass?"password":"text"}
                                         value={pass}
                                         onChange={(e) => {
                                             setPass(e.target.value);
@@ -149,6 +169,13 @@ export default function HomePage() {
                                         required
                                         error={Boolean(tferror?.passerr)}
                                         helperText={tferror?.passerr}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <IconButton onClick={handleTogglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                                    {showpass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                </IconButton>
+                                            ),
+                                        }}
                                     />
                                 </Typography>
                                 <Typography>
@@ -157,7 +184,7 @@ export default function HomePage() {
                                         label="Re-enter Password"
                                         variant="filled"
                                         name="repassword"
-                                        type='password'
+                                        type={showrepass?"password":"text"}
                                         value={repass}
                                         // error={error}
                                         // helperText={error}
@@ -170,6 +197,13 @@ export default function HomePage() {
                                         required
                                         error={Boolean(tferror?.repasserr)}
                                         helperText={tferror?.repasserr}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <IconButton onClick={handleTogglerePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                                    {showrepass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                </IconButton>
+                                            ),
+                                        }}
                                     />
                                 </Typography>
                             </CardContent>

@@ -10,6 +10,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { IconButton } from '@mui/material';
 
 export default function LoginPage() {
     const [name, setName] = useState(""); 
@@ -17,6 +20,11 @@ export default function LoginPage() {
     const [error, setError] = useState("");
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const [showpass,setShowpass]=useState(false)
+
+    const handleTogglePasswordVisibility = () => {
+        setShowpass((prevShowpass) => !prevShowpass);
+    };
 
     const fetchData = () => {
         axios.get(`${Path}entries/get-name`)
@@ -88,11 +96,18 @@ export default function LoginPage() {
                                 fullWidth
                                 label="Password"
                                 variant="filled"
-                                type="password"
+                                type={showpass?"password":"text"}
                                 value={pass}
                                 onChange={(e) => setPass(e.target.value)}
                                 required
                                 sx={{ marginBottom: 2 }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <IconButton onClick={handleTogglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                            {showpass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                        </IconButton>
+                                    ),
+                                }}
                             />
                         </CardContent>
                         <CardActions>
