@@ -20,7 +20,7 @@ export default function LoginPage() {
     const [error, setError] = useState("");
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const [showpass,setShowpass]=useState(false)
+    const [showpass,setShowpass]=useState(true)
 
     const handleTogglePasswordVisibility = () => {
         setShowpass((prevShowpass) => !prevShowpass);
@@ -45,6 +45,7 @@ export default function LoginPage() {
         axios.post(`${Path}entries/login`, formData)
             .then(res => {
                 localStorage.setItem('user', name);
+                setShowpass(true)
                 navigate('/Main-Page');
             })
             .catch(err => {
@@ -88,7 +89,13 @@ export default function LoginPage() {
                                 label="User Name"
                                 variant="filled"
                                 value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => {setName(e.target.value)
+                                    const trimmedValue = e.target.value.trim(); // Trim leading and trailing spaces
+                                    if (!trimmedValue.includes(' ')) { // Check if there are no spaces
+                                    setName(trimmedValue); // Update state with trimmed value
+                                    }
+                                    }}
+                                
                                 required
                                 sx={{ marginBottom: 2 }}
                             />
@@ -98,13 +105,19 @@ export default function LoginPage() {
                                 variant="filled"
                                 type={showpass?"password":"text"}
                                 value={pass}
-                                onChange={(e) => setPass(e.target.value)}
+                                onChange={(e) =>{ 
+                                    setPass(e.target.value)
+                                    const trimmedValue = e.target.value.trim(); // Trim leading and trailing spaces
+                                    if (!trimmedValue.includes(' ')) { // Check if there are no spaces
+                                        setPass(trimmedValue); // Update state with trimmed value
+                                    }
+                                }}
                                 required
                                 sx={{ marginBottom: 2 }}
                                 InputProps={{
                                     endAdornment: (
                                         <IconButton onClick={handleTogglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                                            {showpass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                            {showpass ? <VisibilityOffIcon /> : <VisibilityIcon />}
                                         </IconButton>
                                     ),
                                 }}

@@ -143,6 +143,10 @@ export default function HomePage() {
                                                 ...prevState,
                                                 nameerr: "",
                                               }));
+                                              const trimmedValue = e.target.value.trim(); // Trim leading and trailing spaces
+                                              if (!trimmedValue.includes(' ')) { // Check if there are no spaces
+                                              setName(trimmedValue); // Update state with trimmed value
+                                              }
                                         }}
                                         required
                                         label="User Name"
@@ -161,6 +165,10 @@ export default function HomePage() {
                                         value={pass}
                                         onChange={(e) => {
                                             setPass(e.target.value);
+                                            const trimmedValue = e.target.value.trim();
+                                            if (!trimmedValue.includes(' ')) {
+                                                setPass(trimmedValue);
+                                            }
                                             setTferror((prevState) => ({
                                                 ...prevState,
                                                 passerr: "",
@@ -189,6 +197,10 @@ export default function HomePage() {
                                         // error={error}
                                         // helperText={error}
                                         onChange={(e) => {setRepass(e.target.value)
+                                            const trimmedValue = e.target.value.trim();
+                                             if (!trimmedValue.includes(' ')) {
+                                                setRepass(trimmedValue);
+                                            }
                                             setTferror((prevState) => ({
                                                 ...prevState,
                                                 repasserr: "",

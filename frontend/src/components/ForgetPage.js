@@ -93,7 +93,12 @@ export default function HomePage() {
                                         name='userid'
                                         type="text"
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) =>{
+                                             const trimmedValue = e.target.value.trim();
+                                             if (!trimmedValue.includes(' ')) {
+                                                setName(trimmedValue);
+                                            }
+                                            }}
                                         required
                                         label="Username"
                                         placeholder='Enter Username'
@@ -109,7 +114,12 @@ export default function HomePage() {
                                         name="password"
                                         type={showpass?"password":"text"}
                                         value={pass}
-                                        onChange={(e) => setPass(e.target.value)}
+                                        onChange={(e) => {setPass(e.target.value)
+                                            const trimmedValue = e.target.value.trim();
+                                             if (!trimmedValue.includes(' ')) {
+                                                setPass(trimmedValue);
+                                            }
+                                        }}
                                         required
                                         InputProps={{
                                             endAdornment: (
@@ -128,7 +138,12 @@ export default function HomePage() {
                                         name="repassword"
                                         type={showrepass?"password":"text"}
                                         value={repass}
-                                        onChange={(e) => setRepass(e.target.value)}
+                                        onChange={(e) => {
+                                            const trimmedValue = e.target.value.trim();
+                                             if (!trimmedValue.includes(' ')) {
+                                                setRepass(trimmedValue);
+                                            }
+                                        }}
                                         required
                                         InputProps={{
                                             endAdornment: (
