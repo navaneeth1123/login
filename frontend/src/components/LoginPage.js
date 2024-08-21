@@ -114,13 +114,13 @@ export default function LoginPage() {
                                 }}
                                 required
                                 sx={{ marginBottom: 2 }}
-                                InputProps={{
-                                    endAdornment: (
-                                        <IconButton onClick={handleTogglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                                            {showpass ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                        </IconButton>
-                                    ),
-                                }}
+                                // InputProps={{
+                                //     endAdornment: (
+                                //         <IconButton onClick={handleTogglePasswordVisibility} style={{ cursor: 'pointer' }}>
+                                //             {showpass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                //         </IconButton>
+                                //     ),
+                                // }}
                             />
                         </CardContent>
                         <CardActions>
